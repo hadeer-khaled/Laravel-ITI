@@ -8,9 +8,9 @@ class PostController extends Controller
 {
     
     private  $posts=[
-        ["id"=> "1","title"=>"Post 1" ,"content"=>"This is post 1"],
-        ["id"=> "2","title"=>"Post 2" ,"content"=>"This is post 2"],
-        ["id"=> "3","title"=>"Post 3" ,"content"=>"This is post 3"],
+        ["id"=> "1","title"=>"Post 1" ,"body"=>"This is post 1"],
+        ["id"=> "2","title"=>"Post 2" ,"body"=>"This is post 2"],
+        ["id"=> "3","title"=>"Post 3" ,"body"=>"This is post 3"],
     ];
 
     function index (){
@@ -18,10 +18,31 @@ class PostController extends Controller
     }
     function show ($id){
         if ($id <count($this->posts)){
-            return $this->posts[$id-1];
+            $post = $this->posts[$id-1];
+            return view('details', ["post"=>$post]);
         }
        return abort(404);
     }
 
+    function create(){
+   
+       return view("createPost");
+    }
 
+    function edit($id){
+        if ($id <=count($this->posts)){
+            $post =$this->posts[$id-1];
+            return view('editPost', ["post"=>$post]);
+        }
+        return abort(404);
+
+    }
+     
+    function delete($id){
+        if ($id <=count($this->posts)){
+            $post =$this->posts[$id-1];
+            return view('deletePost', ["post"=>$post]);
+        }
+        return abort(404);
+     }
 }
