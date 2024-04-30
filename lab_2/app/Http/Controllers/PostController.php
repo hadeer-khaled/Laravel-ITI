@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 # to use model
 use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -31,18 +32,42 @@ class PostController extends Controller
     }
 
     function create(){
-        return view('createPost');
+        $users = User::all();
+
+        return view('createPost',  ['users' => $users]);
     }
 
+    private function file_handler($request){
+
+        if($request->hasFile('image')){
+
+            $image = $request->file('image');
+
+            # store in the post_uploads
+            $filepath=$image->store("posts","post_uploads" );
+            return $filepath;
+     
+
+        }
+
+    }
     function store(){
         // dd("store function");
 
-        $request_params = request()->all();
-       
-        $post = new Post();
+        // dd(request());
 
+    
+        $file_path = $this->file_handler(request());
+        //  dd($file_path);
+
+        $request_params= request()->all();
+         // dd($request_params);
+         
+        $post = new Post();
         $post->title = $request_params["title"];
         $post->body = $request_params["body"];
+        $post->posted_by = $request_params["user_name"];
+        $post->image = $file_path;
 
         // dd($post);
 
@@ -52,8 +77,9 @@ class PostController extends Controller
 
 
     function edit($id){
+        $users = User::all();
         $post = Post::findOrFail($id);
-        return view('editPost ', ["post"=>$post]);
+        return view('editPost ', ["post"=>$post , 'users' => $users]);
         
 
     }
@@ -62,8 +88,12 @@ class PostController extends Controller
         $updated_data = request()->all();
         // dd($post, $updated_data);
 
+        $file_path = $this->file_handler(request());
+
         $post->title = $updated_data["title"];
         $post->body = $updated_data["body"];
+        $post->posted_by = $updated_data["user_name"];
+        $post->image = $file_path;
 
         $post->save();
 

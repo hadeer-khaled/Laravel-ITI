@@ -11,6 +11,17 @@
         <label for="body">Body:</label><br>
         <textarea id="body" name="body">{{$post['body']}}</textarea><br>
         
+        <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="user_name">Select User:</label>
+                    <select class="form-control" id="user_name" name="user_name">
+                        @foreach($users as $user)
+                            <option value="{{ $user->name }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            
         <label for="image">Image:</label><br>
         <input type="file" id="image" name="image"><br>
         
