@@ -9,6 +9,7 @@
         <td> Title </td> 
         <td> Content</td>
         <td> Show</td>
+        <td> Edit</td>
         <td> Delete</td>
         @foreach($posts as $post)
             <tr>
@@ -18,6 +19,9 @@
                 <td> 
                     <a href="{{route('post.show',$post['id'] )}}" class="btn btn-info">Show  </a>
                 </td>    
+                <td> 
+                    <a href="{{route('post.edit',$post['id'] )}}" class="btn btn-warning">Edit  </a>
+                </td>  
                 <td> 
                    
                     <form action="{{ route('post.destroy', $post->id) }}" method="POST">

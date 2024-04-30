@@ -2,7 +2,9 @@
 
 @section("content")
     <h1>Edit Post</h1>
-    <form action="/submit_post" method="POST" enctype="multipart/form-data">
+    <form action="{{route('post.update', $post->id)}}" method="POST" enctype="multipart/form-data">
+        @method('PUT')
+        @csrf
         <label for="title">Title:</label><br>
         <input type="text" id="title" name="title" value="{{$post['title']}}"><br>
         

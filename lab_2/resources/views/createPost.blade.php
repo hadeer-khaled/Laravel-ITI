@@ -5,7 +5,8 @@
     <div class="container w-50">
 
     
-    <form action="/submit_post" method="POST" enctype="multipart/form-data">
+    <form action="{{route('post.store')}}" method="POST" enctype="multipart/form-data">
+        @csrf
     
     <div class="form-row">
         <div class="form-group col-md-6">

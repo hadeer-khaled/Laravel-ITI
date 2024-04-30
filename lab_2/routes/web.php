@@ -26,11 +26,14 @@ use App\Http\Controllers\PostController;
 
 Route::get("/posts",[PostController::class,'index'] )->name('post.index');
 
-Route::get("/posts/{id}",[PostController::class,'show'] )->name('post.show')->where('id', '[0-9]+');
+Route::post("/posts",[PostController::class,'store'] )->name('post.store');
 
 Route::get("/posts/create",[PostController::class,'create'] )->name('post.create');
+
+Route::get("/posts/{id}",[PostController::class,'show'] )->name('post.show')->where('id', '[0-9]+');
 
 Route::delete("/posts/{id}/destroy",[PostController::class,'destroy'] )->name('post.destroy')->where('id', '[0-9]+');
 
 Route::get("/posts/{id}/edit",[PostController::class,'edit'] )->name('post.edit')->where('id', '[0-9]+');
 
+Route::put('/posts/{id}', [PostController::class,'update'])->name('post.update');
