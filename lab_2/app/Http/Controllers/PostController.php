@@ -19,9 +19,11 @@ class PostController extends Controller
             // return $posts;
 
         # 2. Using model
-
-            $posts = Post::all();
+// 
+            // $posts = Post::all();
             // return $posts;
+
+            $posts = Post::paginate($perPage = 5, $columns = ['*'], $pageName = 'posts');;
             return view('index', ["posts"=>$posts]);
     }
 
