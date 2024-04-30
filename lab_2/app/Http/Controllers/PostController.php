@@ -25,15 +25,19 @@ class PostController extends Controller
     }
 
     function show ($id){
-        $post = Post::find($id);
+        $post = Post::findorfail($id);
         return view('details', ["post"=>$post]);
      
     }
 
     function create(){
    
-       return view("createPost");
     }
+
+    function store(){
+   
+    }
+
 
     // function edit($id){
     //     if ($id <=count($this->posts)){
@@ -43,12 +47,16 @@ class PostController extends Controller
     //     return abort(404);
 
     // }
+    function update(){
+   
+     }
+ 
      
-    // function delete($id){
-    //     if ($id <=count($this->posts)){
-    //         $post =$this->posts[$id-1];
-    //         return view('deletePost', ["post"=>$post]);
-    //     }
-    //     return abort(404);
-    //  }
+    function destroy($id){
+        $post = Post::findorfail($id);
+        $post->delete();
+        return to_route("post.index");
+
+    }
+
 }

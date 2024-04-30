@@ -8,16 +8,23 @@
         <td> ID </td>
         <td> Title </td> 
         <td> Content</td>
-        <td> Actions</td>
+        <td> Show</td>
+        <td> Delete</td>
         @foreach($posts as $post)
             <tr>
                 <td> {{$post['id'] }}</td>
                 <td> {{$post['title']}}</td>
                 <td> {{$post['body']}}</td>
                 <td> 
-                <a href="{{route('post.show',$post['id'] )}}" class="btn btn-info">Show  </a>
-                |
-                <a href="{{route('post.delete',$post['id'] )}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</a>
+                    <a href="{{route('post.show',$post['id'] )}}" class="btn btn-info">Show  </a>
+                </td>    
+                <td> 
+                   
+                    <form action="{{ route('post.destroy', $post->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" value = "delete" class="btn btn-danger">Delete</button>
+                    </form>
 
                 </td>
 
