@@ -10,6 +10,7 @@
                 <h5 class="card-title">{{$post->title}}</h5>
                 <p class="card-text">Post Body:{{$post->body}}</p>
             </div>
+            <a href="{{ url()->previous() }}" class="btn btn-primary">Back to all Posts </a>
         </div>
 
 @endsection
