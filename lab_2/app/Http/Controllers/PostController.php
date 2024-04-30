@@ -3,31 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+#  to use database builder
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\DB;
+
+# to use model
+use App\Models\Post;
 
 class PostController extends Controller
 {
     
-    // private  $posts=[
-    //     ["id"=> "1","title"=>"Post 1" ,"body"=>"This is post 1"],
-    //     ["id"=> "2","title"=>"Post 2" ,"body"=>"This is post 2"],
-    //     ["id"=> "3","title"=>"Post 3" ,"body"=>"This is post 3"],
-    // ];
-
     function index (){
-        $posts = DB::table('posts')->get();
-            return $posts;
+        # 1. Using DataBase Builder
+            // $posts = DB::table('posts')->get();
+            // return $posts;
 
+        # 2. Using model
 
+            $posts = Post::all();
+            // return $posts;
+            return view('index', ["posts"=>$posts]);
     }
-    // function show ($id){
-    //     if ($id <count($this->posts)){
-    //         $post = $this->posts[$id-1];
-    //         return view('details', ["post"=>$post]);
-    //     }
-    //    return abort(404);
-    // }
+
+    function show ($id){
+        $post = Post::find($id);
+        return view('details', ["post"=>$post]);
+     
+    }
 
     function create(){
    
