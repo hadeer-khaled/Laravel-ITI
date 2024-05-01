@@ -7,6 +7,7 @@
     <table class='table'> <tr> 
         <td> ID </td>
         <td> Title </td> 
+        <td> Title Slug </td> 
         <td> Body</td>
         <td> Created by</td>
         <td> Show</td>
@@ -15,7 +16,8 @@
         @foreach($posts as $post)
             <tr>
                 <td> {{$post['id'] }}</td>
-                <td> {{$post['title']}}</td>
+                <td> {{$post['title'] }}</td>
+                <td> {{$post['title_slug']}}</td>
                 <td> {{$post['body']}}</td>
                 <td> {{$post['posted_by']}}</td>
                 <td> 

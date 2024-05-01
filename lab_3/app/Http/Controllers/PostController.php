@@ -14,9 +14,14 @@ use Illuminate\Validation\Rule;
 use App\Models\Post;
 use App\Models\User;
 
+
+use Illuminate\Support\Str;
+
+
+
 class PostController extends Controller
 {
-    
+   
     function index (){
             $posts = Post::paginate($perPage = 5, $columns = ['*'], $pageName = 'posts');;
             return view('index', ["posts"=>$posts]);
@@ -97,6 +102,7 @@ class PostController extends Controller
         $file_path = $this->file_handler(request());
 
         $post->title = $updated_data["title"];
+        $post->title_slug = Str::slug($post->title);
         $post->body = $updated_data["body"];
         $post->posted_by = $updated_data["posted_by"];
         $post->image = $file_path;

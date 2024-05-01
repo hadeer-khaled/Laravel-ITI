@@ -5,17 +5,32 @@
     <form action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
         @method('PUT')
         @csrf
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" value="{{ $post->title }}"><br>
-        @error('title')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        
-        <label for="body">Body:</label><br>
-        <textarea id="body" name="body">{{ $post->body }}</textarea><br>
-        @error('body')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
+        <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="title_slug">Title Slug:</label>
+                    <input type="text" class="form-control" id="title_slug" name="title_slug" value="{{  $post->title_slug}}" disabled>
+                </div>
+            </div>
+
+        <div class="form-row">
+                <div class="form-group col-md-6">    
+                    <label for="title">Title:</label><br>
+                    <input type="text" class="form-control"  id="title" name="title" value="{{ $post->title }}"><br>
+                </div>
+                @error('title')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+        </div>
+  
+        <div class="form-row">
+                <div class="form-group col-md-6">          
+                    <label for="body">Body:</label><br>
+                    <textarea id="body" name="body">{{ $post->body }}</textarea><br>
+                </div>
+            @error('body')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
         
         <div class="form-row">
             <div class="form-group col-md-6">
