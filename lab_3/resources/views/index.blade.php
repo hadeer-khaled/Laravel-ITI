@@ -6,6 +6,7 @@
 <a href="{{route('post.create' )}}" class="btn btn-success" style="postition:absolute right:0px">Add  </a>
     <table class='table'> <tr> 
         <td> ID </td>
+        <td> Created by </td>
         <td> Title </td> 
         <td> Title Slug </td> 
         <td> Body</td>
@@ -16,6 +17,7 @@
         @foreach($posts as $post)
             <tr>
                 <td> {{$post['id'] }}</td>
+                <td> {{ $post->created_at->toFormattedDateString() }}</td>
                 <td> {{$post['title'] }}</td>
                 <td> {{$post['title_slug']}}</td>
                 <td> {{$post['body']}}</td>
