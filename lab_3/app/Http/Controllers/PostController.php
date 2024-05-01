@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Validation\Rule;
+
+
 # to use model
 use App\Models\Post;
 use App\Models\User;
@@ -15,15 +18,6 @@ class PostController extends Controller
 {
     
     function index (){
-        # 1. Using DataBase Builder
-            // $posts = DB::table('posts')->get();
-            // return $posts;
-
-        # 2. Using model
-// 
-            // $posts = Post::all();
-            // return $posts;
-
             $posts = Post::paginate($perPage = 5, $columns = ['*'], $pageName = 'posts');;
             return view('index', ["posts"=>$posts]);
     }
@@ -55,21 +49,20 @@ class PostController extends Controller
 
     }
     function store(){
-        // dd("store function");
 
-        // dd(request());
-
+        $validated = request()->validate([
+            'title' => 'required|unique:posts|min:3',
+            'body' => 'required|min:10',
+            'posted_by'=>'required'
+        ]);
     
         $file_path = $this->file_handler(request());
-        //  dd($file_path);
-
         $request_params= request()->all();
-         // dd($request_params);
          
         $post = new Post();
         $post->title = $request_params["title"];
         $post->body = $request_params["body"];
-        $post->posted_by = $request_params["user_name"];
+        $post->posted_by = $request_params["posted_by"];
         $post->image = $file_path;
 
         // dd($post);
@@ -87,15 +80,25 @@ class PostController extends Controller
 
     }
     function update($id){
+
         $post = Post::findOrFail($id);
+
+        $validated = request()->validate([
+            'title' => [
+                'required',
+                Rule::unique('posts')->ignore($post->id),'min:3'],
+            'body' => ['required','min:10'],
+            'posted_by'=>['required']
+        ]);
+
+        
         $updated_data = request()->all();
-        // dd($post, $updated_data);
 
         $file_path = $this->file_handler(request());
 
         $post->title = $updated_data["title"];
         $post->body = $updated_data["body"];
-        $post->posted_by = $updated_data["user_name"];
+        $post->posted_by = $updated_data["posted_by"];
         $post->image = $file_path;
 
         $post->save();
