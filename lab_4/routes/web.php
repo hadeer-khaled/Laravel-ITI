@@ -42,6 +42,13 @@ Route::put('/posts/{id}', [PostController::class,'update'])->name('post.update')
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comment.store');
 
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+# To create auth middleware in the /osad route
+Route::get("/osad", function (){
+    return "Hello from Ghaza";
+})->middleware('auth');

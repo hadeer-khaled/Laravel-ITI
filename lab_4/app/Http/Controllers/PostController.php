@@ -21,6 +21,13 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+
+    function __construct(){
+        # all routes associated to all functions in this controller must use the auth middleware
+     $this->middleware('auth');
+    //  $this->middleware('auth')->only('store','update','destroy');
+        // $this->middleware('auth')->except(['index', 'show']);
+    }
    
     function index (){
             $posts = Post::paginate($perPage = 5, $columns = ['*'], $pageName = 'posts');;
