@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,4 +40,4 @@ Route::get("/posts/{id}/edit",[PostController::class,'edit'] )->name('post.edit'
 
 Route::put('/posts/{id}', [PostController::class,'update'])->name('post.update');
 
-
+Route::post('/comments', [CommentController::class, 'store'])->name('comment.store');

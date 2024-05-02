@@ -47,7 +47,7 @@
                 @enderror
             </div>
         </div>
-        
+      
         <label for="image">Image:</label><br>
         <input type="file" id="image" name="image"><br>
         
