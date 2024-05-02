@@ -27,7 +27,7 @@
                 <td> {{$post['title'] }}</td>
                 <td> {{$post['title_slug']}}</td>
                 <td> {{$post['body']}}</td>
-                <td> {{$post['posted_by']}}</td>
+                <td> {{$post['posted_by']}} : {{$post->posted_by ? $post->user->name : "no creator"}}</td>
                 <td> 
                     <a href="{{route('post.show',$post['id'] )}}" class="btn btn-info">Show  </a>
                 </td>    

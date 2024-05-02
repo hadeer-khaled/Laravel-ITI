@@ -16,7 +16,7 @@ use App\Models\User;
 
 
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Auth;
 
 
 class PostController extends Controller
@@ -63,8 +63,15 @@ class PostController extends Controller
     
         $file_path = $this->file_handler(request());
         $request_params= request()->all();
-         
+
+        $user = Auth::user();
+        // dd($user->id);
+        if($user){
+            $request_params["posted_by"]=$user->id;
+        }
+
         $post = new Post();
+
         $post->title = $request_params["title"];
         $post->body = $request_params["body"];
         $post->posted_by = $request_params["posted_by"];
