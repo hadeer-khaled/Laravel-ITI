@@ -4,13 +4,13 @@
 <div class="container">
     <h1>Post Details</h1>
     <div class="d-flex flex-row justify-content-between">
-
     <div class="card" style="width: 25rem;">
             <img height="300"
                 src="{{asset('images/'.$post->image)}}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{$post->title}}</h5>
                 <p class="card-text">Post Body:{{$post->body}}</p>
+                </p class="card-text">Created at: {{ $post->created_at->toFormattedDateString() }}</p>
             </div>
             <a href="{{ url()->previous() }}" class="btn btn-primary">Back to all Posts </a>
     </div class="comments-section">
