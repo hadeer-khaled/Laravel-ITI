@@ -30,7 +30,7 @@ class PostController extends Controller
     function show ($id){
         $post = Post::findOrFail($id);
         return view('details', ["post"=>$post]);
-     
+
     }
 
     function create(){
@@ -117,16 +117,19 @@ class PostController extends Controller
      
     function destroy($id){
         $post = Post::findOrFail($id);
-        // if ($post->image) {
-        //     $directory = '../public/images/';
-        //     $imageName= $post->image;
-        //     $filePath = $directory .  $imageName;
-
-        //     $deleted = Storage::delete($filePath);
-        // }
+       
         $post->delete();
         return to_route("post.index");
 
     }
+
+    public function restore()
+        {
+            $restoredCount = Post::onlyTrashed()->restore();
+
+            return redirect()->back()->with('success', $restoredCount . ' soft deleted posts restored successfully');
+        }
+
+
 
 }

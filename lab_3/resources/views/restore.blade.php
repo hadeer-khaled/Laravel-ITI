@@ -1,18 +1,12 @@
 @extends("layouts.app")
 @section("content")
-<h1 > All posts </h1>
+<h1 > Restored posts </h1>
 <div class = "container" style="postition:relative">
 
-<a href="{{route('post.create' )}}" class="btn btn-success" style="postition:absolute right:0px">Add  </a>  
-<form action="{{ route('post.restore') }}" method="POST">
-        @csrf
-        @method('PUT')
-        <button type="submit" class="btn btn-success mt-3">Restore Soft Deleted Posts</button>
-    </form>
-                  
-<table class='table'> <tr> 
+<a href="{{route('post.create' )}}" class="btn btn-success" style="postition:absolute right:0px">Add  </a>
+    <table class='table'> <tr> 
         <td> ID </td>
-        <td> Created by </td>
+        <td> Deleted at </td>
         <td> Title </td> 
         <td> Title Slug </td> 
         <td> Body</td>
@@ -23,7 +17,7 @@
         @foreach($posts as $post)
             <tr>
                 <td> {{$post['id'] }}</td>
-                <td> {{ $post->created_at->toFormattedDateString() }}</td>
+                <td> {{ $post->deleted_at->toFormattedDateString() }}</td>
                 <td> {{$post['title'] }}</td>
                 <td> {{$post['title_slug']}}</td>
                 <td> {{$post['body']}}</td>
@@ -41,12 +35,10 @@
                         <button type="submit" value = "delete" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
-             
-
+            
             </tr>
 
         @endforeach
-
     </table>
     {{ $posts->links() }}
 

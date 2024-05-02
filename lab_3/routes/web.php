@@ -30,6 +30,8 @@ Route::post("/posts",[PostController::class,'store'] )->name('post.store');
 
 Route::get("/posts/create",[PostController::class,'create'] )->name('post.create');
 
+Route::put('/posts/restore', [PostController::class,'restore'])->name('post.restore');
+
 Route::get("/posts/{id}",[PostController::class,'show'] )->name('post.show')->where('id', '[0-9]+');
 
 Route::delete("/posts/{id}/destroy",[PostController::class,'destroy'] )->name('post.destroy')->where('id', '[0-9]+');
@@ -37,3 +39,5 @@ Route::delete("/posts/{id}/destroy",[PostController::class,'destroy'] )->name('p
 Route::get("/posts/{id}/edit",[PostController::class,'edit'] )->name('post.edit')->where('id', '[0-9]+');
 
 Route::put('/posts/{id}', [PostController::class,'update'])->name('post.update');
+
+
