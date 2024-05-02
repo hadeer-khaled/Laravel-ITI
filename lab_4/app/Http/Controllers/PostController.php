@@ -15,6 +15,9 @@ use App\Models\Post;
 use App\Models\User;
 
 
+use Illuminate\Support\Facades\Gate;
+
+
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +30,11 @@ class PostController extends Controller
      $this->middleware('auth');
     //  $this->middleware('auth')->only('store','update','destroy');
         // $this->middleware('auth')->except(['index', 'show']);
+    }
+    private function  authorize_user($post){
+        if (! Gate::allows('post_update_delete', $post)) {
+            abort(403);
+        }
     }
    
     function index (){
@@ -92,8 +100,10 @@ class PostController extends Controller
 
 
     function edit($id){
+        
         $users = User::all();
         $post = Post::findOrFail($id);
+        $this->authorize_user($post);
         return view('editPost ', ["post"=>$post , 'users' => $users]);
         
 
@@ -118,7 +128,7 @@ class PostController extends Controller
         $post->title = $updated_data["title"];
         $post->title_slug = Str::slug($post->title);
         $post->body = $updated_data["body"];
-        $post->posted_by = $updated_data["posted_by"];
+        $post->posted_by = Auth::user()->id;
         $post->image = $file_path;
 
         $post->save();
@@ -131,6 +141,7 @@ class PostController extends Controller
      
     function destroy($id){
         $post = Post::findOrFail($id);
+        $this->authorize_user($post);
        
         $post->delete();
         return to_route("post.index");

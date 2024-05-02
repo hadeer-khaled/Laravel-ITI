@@ -1,11 +1,17 @@
 <?php
 
 namespace App\Providers;
+use Illuminate\Support\Facades\Gate;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+use App\Models\Post;
+use App\Models\User;
+
 class AuthServiceProvider extends ServiceProvider
+
+
 {
     /**
      * The model to policy mappings for the application.
@@ -21,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('post_update_delete', function (User $user, Post $post) {
+            return $user->id === $post->posted_by;
+        });
     }
 }
