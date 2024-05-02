@@ -41,3 +41,7 @@ Route::get("/posts/{id}/edit",[PostController::class,'edit'] )->name('post.edit'
 Route::put('/posts/{id}', [PostController::class,'update'])->name('post.update');
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comment.store');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
