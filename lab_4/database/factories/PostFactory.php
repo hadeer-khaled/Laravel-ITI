@@ -25,7 +25,7 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->unique()->sentence,
             'body' => $this->faker->text(200),
-            'posted_by' => User::factory(), 
+            'posted_by' => $this->faker->numberBetween(1, 10), 
             'image' => 'posts/default.png',
         ];
     }
