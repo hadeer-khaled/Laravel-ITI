@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
+
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +25,7 @@ Route::get('/', function () {
 });
 
   
-use App\Http\Controllers\PostController;
+
 
 Route::get("/posts",[PostController::class,'index'] )->name('post.index');
 
@@ -47,6 +50,8 @@ Route::post('/comments', [CommentController::class, 'store'])->name('comment.sto
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/users',[UserController::class,'index'])->name('user.index');
+Route::get('/users/{id}',[UserController::class,'show'])->name('user.show');
 
 # To create auth middleware in the /osad route
 Route::get("/osad", function (){
