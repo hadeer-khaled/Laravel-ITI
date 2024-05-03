@@ -31,9 +31,10 @@
                 <td> 
                     <a href="{{route('post.show',$post['id'] )}}" class="btn btn-info">Show  </a>
                 </td>    
+                @can('post_update_delete', $post)
                 <td> 
                     <a href="{{route('post.edit',$post['id'] )}}" class="btn btn-warning">Edit  </a>
-                </td>  
+                </td> 
                 <td> 
                     <form action="{{ route('post.destroy', $post->id) }}" method="POST">
                         @csrf
@@ -41,7 +42,10 @@
                         <button type="submit" value = "delete" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
-             
+                @else
+                    <td> You are not authorized to edit </td>
+                    <td> You are not authorized to delete </td>
+                @endcan
 
             </tr>
 
