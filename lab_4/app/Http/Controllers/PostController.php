@@ -14,6 +14,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Post;
 use App\Models\User;
 
+use App\Policies\PostPolicy;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -103,7 +104,13 @@ class PostController extends Controller
         
         $users = User::all();
         $post = Post::findOrFail($id);
-        $this->authorize_user($post);
+        // gates
+        // $this->authorize_user($post);
+
+
+        // policy
+        $this->authorize('update', $post);
+        
         return view('editPost ', ["post"=>$post , 'users' => $users]);
         
 
@@ -112,6 +119,7 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
 
+        $this->authorize('update', $post);
         $validated = request()->validate([
             'title' => [
                 'required',
@@ -141,7 +149,11 @@ class PostController extends Controller
      
     function destroy($id){
         $post = Post::findOrFail($id);
-        $this->authorize_user($post);
+        // gates
+        // $this->authorize_user($post);
+
+        // policy
+        $this->authorize('delete', $post);
        
         $post->delete();
         return to_route("post.index");

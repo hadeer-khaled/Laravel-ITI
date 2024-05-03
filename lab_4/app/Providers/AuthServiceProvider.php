@@ -9,6 +9,9 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\Models\Post;
 use App\Models\User;
 
+use App\Policies\PostPolicy;
+
+
 class AuthServiceProvider extends ServiceProvider
 
 
@@ -19,7 +22,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Post::class => PostPolicy::class,
     ];
 
     /**
@@ -30,5 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('post_update_delete', function (User $user, Post $post) {
             return $user->id === $post->posted_by;
         });
+        $this->registerPolicies();
+
     }
 }

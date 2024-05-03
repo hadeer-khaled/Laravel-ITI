@@ -30,11 +30,16 @@
                 <td> {{$post['posted_by']}} : {{$post->posted_by ? $post->user->name : "no creator"}}</td>
                 <td> 
                     <a href="{{route('post.show',$post['id'] )}}" class="btn btn-info">Show  </a>
-                </td>    
-                @can('post_update_delete', $post)
+                </td>  
+                @can('update', $post)  
                 <td> 
                     <a href="{{route('post.edit',$post['id'] )}}" class="btn btn-warning">Edit  </a>
                 </td> 
+                @else
+                    <td> You cannot edit this track </td>
+                @endcan
+                  
+                @can('delete', $post)
                 <td> 
                     <form action="{{ route('post.destroy', $post->id) }}" method="POST">
                         @csrf
@@ -43,10 +48,9 @@
                     </form>
                 </td>
                 @else
-                    <td> You are not authorized to edit </td>
-                    <td> You are not authorized to delete </td>
+                    <td> You cannot delete this track </td>
                 @endcan
-
+                  
             </tr>
 
         @endforeach
