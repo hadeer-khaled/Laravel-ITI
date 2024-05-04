@@ -72,6 +72,17 @@ class PostController extends Controller
             'body' => 'required',
             'posted_by' => 'required',
         ]);
+        if ($post_validator->fails()) {
+            // return response()->json($post_validator->errors(), 422);
+            return response()->json(
+                [
+                    'validation_errors' => $post_validator->errors(),
+                    'message' =>'please review your post form data',
+                    'typealert'=>'danger'
+                ], 422
+            );
+        }
+
         $request_parms = request()->all();
         $file_path = $this->file_operations($request);
         if($file_path != null){
