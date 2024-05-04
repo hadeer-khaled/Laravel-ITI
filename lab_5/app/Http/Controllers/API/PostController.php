@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 class PostController extends Controller
 { 
     /**
      * Display a listing of the resource.
      */
+  
     public function index()
     {
         $posts = Post::all();
@@ -22,6 +26,23 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $post_validator = Validator::make($request->all(),
+        [
+            'title' => 'required|unique:posts',
+            'body' => 'required',
+            'posted_by' => 'required',
+        ]);
+        if ($post_validator->fails()) {
+            // return response()->json($post_validator->errors(), 422);
+            return response()->json(
+                [
+                    'validation_errors' => $post_validator->errors(),
+                    'message' =>'please review your post form data',
+                    'typealert'=>'danger'
+                ], 422
+            );
+        }
+
         $file_path = $this->file_operations($request);
         $request_parms = request()->all();
         $request_parms['image'] = $file_path;
@@ -35,7 +56,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $post = Post::findOrFail($post);
+        return $post;
+
     }
 
     /**
@@ -43,7 +66,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+       
     }
 
     /**
