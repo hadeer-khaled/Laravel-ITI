@@ -19,6 +19,9 @@ class Post extends Model
     use Sluggable;
     use SoftDeletes;
     use HasTags;
+    protected $fillable = [
+        'title', 'body','image',"posted_by"
+    ];
     public function sluggable(): array
     {
         return [

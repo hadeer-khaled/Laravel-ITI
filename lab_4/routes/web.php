@@ -57,3 +57,4 @@ Route::get('/users/{id}',[UserController::class,'show'])->name('user.show');
 Route::get("/osad", function (){
     return "Hello from Ghaza";
 })->middleware('auth');
+
