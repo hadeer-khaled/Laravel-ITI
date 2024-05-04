@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
 use Illuminate\Http\Request;
+
+use App\Models\Post;
+use App\Http\Resources\PostResource;
 
 
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +20,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return $posts;
+        return  PostResource::collection($posts);
     }
 
     /**
@@ -56,8 +58,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post = Post::findOrFail($post);
-        return $post;
+        return  new PostResource($post);
 
     }
 
@@ -105,7 +106,7 @@ class PostController extends Controller
         if($request->hasFile('image')){
 
             $image = $request->file('image');
-            $filepath=$image->store("images","post_uploads" );
+            $filepath=$image->store("posts","post_uploads" );
             return $filepath;
 
         }
