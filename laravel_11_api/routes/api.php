@@ -10,6 +10,7 @@ use App\Http\Controllers\API\UserController ;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
 
 
 Route::post('/sanctum/token', function (Request $request) {
@@ -36,3 +37,19 @@ Route::post('/sanctum/token', function (Request $request) {
 
 Route::apiResource("posts",PostController::class)->middleware('auth:sanctum');
 Route::apiResource("users",UserController::class);
+
+
+
+####################lOGIN WITH GITHUB####################
+ 
+// Route::get('/auth/redirect', function () {
+//     // return "hiiiiiiiiiiiiiiiiii";
+//     return Socialite::driver('github')->redirect();
+// });
+ 
+// Route::get('/auth/callback', function () {
+//     $user = Socialite::driver('github')->user();
+//     dd($user);
+ 
+//     // $user->token
+// });
