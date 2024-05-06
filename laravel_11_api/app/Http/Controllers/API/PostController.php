@@ -63,8 +63,24 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $post_validator = Validator::make($request->all(),
+        [
+           'title' => [
+                'required',
+                Rule::unique('posts')->ignore($post->id),
+            ],
+            'body' => 'required',
+            'posted_by' => 'required',
+        ]);
+        $request_parms = request()->all();
+        $file_path = $this->file_operations($request);
+        if($file_path != null){
+            $request_parms['image'] = $file_path;
+        }
+        $post->update($request_parms);
+        return $post;
     }
+    
 
     /**
      * Remove the specified resource from storage.
