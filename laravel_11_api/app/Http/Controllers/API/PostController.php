@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
+use App\Http\Controllers\Controller; 
 
 use App\Models\Post;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
 
 class PostController extends Controller
@@ -16,6 +17,10 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:sanctum');
+    // }
     public function index()
     {
         $posts = Post::all();
@@ -31,7 +36,7 @@ class PostController extends Controller
         [
             'title' => 'required|unique:posts',
             'body' => 'required',
-            'creator_id' => 'required',
+            // 'creator_id' => 'required',
         ]);
         if ($post_validator->fails()) {
             return response()->json(
@@ -45,6 +50,7 @@ class PostController extends Controller
         $file_path = $this->file_operations($request);
         $request_parms = request()->all();
         $request_parms['image'] = $file_path;
+        $request_parms['creator_id'] = Auth::user()->id;
         $post = Post::create($request_parms);
         $post->save();
         return new PostResource($post);
