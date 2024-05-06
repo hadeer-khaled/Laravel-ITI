@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,7 +13,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return $posts;
     }
 
     /**
@@ -27,15 +28,16 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Post $post)
     {
-        //
+        $posts = Post::all();
+        return $posts;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Post $post)
     {
         //
     }
@@ -43,7 +45,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Post $post)
     {
         //
     }
