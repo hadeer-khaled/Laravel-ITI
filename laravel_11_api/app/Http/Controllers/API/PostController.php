@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
+
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -22,7 +26,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post_validator = Validator::make($request->all(),
+        [
+            'title' => 'required|unique:posts',
+            'body' => 'required',
+            'creator_id' => 'required',
+        ]);
+        if ($post_validator->fails()) {
+            return response()->json(
+                [
+                    'validation_errors' => $post_validator->errors(),
+                    'message' =>'please review your post form data',
+                    'typealert'=>'danger'
+                ], 422
+            );
+        }
+        $file_path = $this->file_operations($request);
+        $request_parms = request()->all();
+        $request_parms['image'] = $file_path;
+        $post = Post::create($request_parms);
+        $post->save();
+        return $post;
     }
 
     /**
@@ -48,5 +72,15 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+    private function file_operations($request){
+        if($request->hasFile('image')){
+
+            $image = $request->file('image');
+            $filepath=$image->store("posts","post_uploads" );
+            return $filepath;
+
+        }
+        return null;
     }
 }
