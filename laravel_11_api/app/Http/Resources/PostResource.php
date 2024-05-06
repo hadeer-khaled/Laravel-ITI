@@ -23,7 +23,8 @@ class PostResource extends JsonResource
             'post_image'=>"/images/{$this->image}",
             // 'creator_id'=>$this->creator_id,
             // 'creator_id' => $this->creator_id ? $this->creator->name : "no creator",
-            'creator_id' => $this->creator_id ? new UserResource($this->creator) :  "no creator",
+            // 'creator_id' => $this->creator_id ? new UserResource($this->creator) :  "no creator",
+            'creator' => $this->creator,
         ];
     }
 }

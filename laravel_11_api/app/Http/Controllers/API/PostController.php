@@ -23,7 +23,8 @@ class PostController extends Controller
     // }
     public function index()
     {
-        $posts = Post::all();
+        // $posts = Post::all();
+        $posts = Post::with('creator')->get();
         return  PostResource::collection($posts);
     }
 
