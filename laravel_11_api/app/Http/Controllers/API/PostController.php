@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 
 use App\Models\Post;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\PostResource;
 
 class PostController extends Controller
 {
@@ -18,7 +19,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return $posts;
+        return  PostResource::collection($posts);
     }
 
     /**
@@ -46,7 +47,7 @@ class PostController extends Controller
         $request_parms['image'] = $file_path;
         $post = Post::create($request_parms);
         $post->save();
-        return $post;
+        return new PostResource($post);
     }
 
     /**
@@ -54,8 +55,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $posts = Post::all();
-        return $posts;
+        $post = Post::all();
+        return new PostResource($post);
     }
 
     /**
@@ -78,7 +79,7 @@ class PostController extends Controller
             $request_parms['image'] = $file_path;
         }
         $post->update($request_parms);
-        return $post;
+        return new PostResource($post);
     }
     
 
@@ -87,8 +88,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response()->json('deleted successfully' , 200)  ;
     }
+
+    
     private function file_operations($request){
         if($request->hasFile('image')){
 
